@@ -1,17 +1,15 @@
-import { dbTodo } from '../firebase';
+import { dbUsers, currentTs } from '../firebase';
 import { DATA_INSERT, DATA_SELECT, DATA_DELETE, DATA_UPDATE } from "./types";
 
 export const dataInsert = (uid, data) => async dispatch => {
-    const payload = {uid, data}; 
-    //const newPostKey = dbTodo.push().key;
-    dbTodo.push(payload);
+    dbUsers.child(uid).push({name: data, startedOn: currentTs});
     dispatch({
         type: DATA_INSERT
     });
 }
 
-export const dataSelect = () => async dispatch => {
-    dbTodo.on('value', snapshot => {
+export const dataSelect = (uid) => async dispatch => {
+    dbUsers.child(uid).on('value', snapshot => {
       dispatch({
         type: DATA_SELECT,
         payload: snapshot.val()
@@ -20,7 +18,7 @@ export const dataSelect = () => async dispatch => {
 };
 
 export const dataDelete = (uid, id) => async dispatch => {
-  dbTodo.child(id).remove();
+  dbUsers.child(uid).child(id).remove();
   dispatch({
       type: DATA_DELETE
   });
@@ -28,7 +26,7 @@ export const dataDelete = (uid, id) => async dispatch => {
 
 export const dataUpdate = (uid, id, data) => async dispatch => {
   const payload = {uid, data}; 
-  dbTodo.child(id).update(payload);
+  dbUsers.child(id).update(payload);
   dispatch({
     type: DATA_UPDATE
   });
