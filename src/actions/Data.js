@@ -1,5 +1,5 @@
 import { dbUsers, currentTs } from '../firebase';
-import { DATA_INSERT, DATA_SELECT, DATA_DELETE, DATA_UPDATE } from "./types";
+import { DATA_INSERT, DATA_SELECT, DATA_DELETE, DATA_UPDATE, BOOK_READ } from "./types";
 
 export const dataInsert = (uid, data) => async dispatch => {
     dbUsers.child(uid).push({name: data, startedOn: currentTs});
@@ -23,6 +23,14 @@ export const dataDelete = (uid, id) => async dispatch => {
       type: DATA_DELETE
   });
 }
+
+export const readBook = (uid, id, d) => async dispatch => {
+  dbUsers.child(uid).child(id).child('reads').push(d);
+  dispatch({
+    type: BOOK_READ
+  });
+}
+
 
 export const dataUpdate = (uid, id, data) => async dispatch => {
   const payload = {uid, data}; 

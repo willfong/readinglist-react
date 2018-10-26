@@ -5,3 +5,5 @@ export const DATA_INSERT = 'data_insert';
 export const DATA_SELECT = 'data_select';
 export const DATA_DELETE = 'data_delete';
 export const DATA_UPDATE = 'data_update';
+
+export const BOOK_READ = 'book_read';

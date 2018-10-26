@@ -26,7 +26,7 @@ class Home extends Component {
         return (
             <div>
                 <p className="lead">Keep track of the books you have read, and what you'll read next. Share with the world.</p>
-                <p>Just a pet project.</p>
+                <p>Just a pet project. Still a work in progress. Features will be slowly added as time permits.</p>
                 {this.authenticate()}
             </div>
         )

@@ -26,10 +26,33 @@ class App extends Component {
         this.props.dataDelete(this.props.auth.uid, e.target.id);
     }
 
+    _readBook = e => {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1;
+        var yyyy = today.getFullYear();
+
+        if(dd<10) {
+            dd = '0'+dd
+        } 
+
+        if(mm<10) {
+            mm = '0'+mm
+        } 
+        console.log(`${yyyy}-${mm}-${dd}`);
+        this.props.readBook(this.props.auth.uid, e.target.id, `${yyyy}-${mm}-${dd}`);
+    }
     _renderList = () => {
         return  _.map(this.props.books, payload => {
             return (
-                <li className="list-group-item" key={payload.key}>{payload.name} <span className="float-right"><small>Started: <Moment date={payload.startedOn} fromNow/></small> | <a href="#" onClick={this._deleteBook} id={payload.key}>Delete</a></span></li>
+                <li className="list-group-item" key={payload.key}>
+                    {payload.name} 
+                    <span className="float-right">
+                        <small>Started: <Moment date={payload.startedOn} fromNow/></small> 
+                        | <a href="#" onClick={this._readBook} id={payload.key}>Read Today</a> 
+                        | <a href="#" onClick={this._deleteBook} id={payload.key}>Delete</a>
+                    </span>
+                </li>
             )
         });
     }
